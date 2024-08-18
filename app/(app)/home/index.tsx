@@ -33,17 +33,17 @@ export default function Home() {
 
         <HomeCard imageSource={require('../../../assets/icons/psychologyIcon.png')}
           title="Psicólogos Próximos"
-          route="/home/"
+          route="/home/psychologists"
           backgroundColor={colors.brown[200]} />
 
         <HomeCard imageSource={require('../../../assets/icons/videoIcon.png')}
           title="Vídeos de Autoajuda"
-          route="/home/exercises"
+          route="/home/videos"
           backgroundColor={colors.green[100]} />
 
         <HomeCard imageSource={require('../../../assets/icons/infoIcon.png')}
           title="Painel Informátivo"
-          route="/home/"
+          route="/home/infopanel"
           backgroundColor={colors.green[200]} />
       </View>
 

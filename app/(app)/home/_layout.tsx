@@ -8,6 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { colors } from '../../../styles/colors';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fontFamily } from '../../../styles/fontFamily';
+import CardHeader from '../../../components/cardheader/cardHeader';
 
 export default function _layout() {
   return (
@@ -90,12 +91,35 @@ export default function _layout() {
         }}
       />
 
+      {/* Tabs Cards */}
       <Tabs.Screen
         name='exercises'
         options={{
-          header: () => <HomeHeader />,
+          header: () => <CardHeader />,
           href: null
         }} />
+
+      <Tabs.Screen
+        name='psychologists'
+        options={{
+          header: () => <CardHeader />,
+          href: null
+        }} />
+
+      <Tabs.Screen
+        name='videos'
+        options={{
+          header: () => <CardHeader />,
+          href: null
+        }} />
+
+      <Tabs.Screen
+        name='infopanel'
+        options={{
+          header: () => <CardHeader />,
+          href: null
+        }} />
+
     </Tabs>
   )
 }
