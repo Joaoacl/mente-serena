@@ -9,7 +9,7 @@ export default function HomeCard({ imageSource, title, route, backgroundColor }:
     <View>
       <Pressable
         style={{ width: wp(40), height: hp(20), marginBottom: hp(3.5), backgroundColor }}
-        className='rounded-3xl px-4 flex-col gap-16 justify-center'
+        className='rounded-3xl px-4 flex-col gap-12 justify-center'
         onPress={() => router.push(route)}
       >
         <Image

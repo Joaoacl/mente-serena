@@ -12,16 +12,24 @@ const blurhash =
     'LFIr1=e.0moJysjsIoR+WBof$$ja';
 
 const ios = Platform.OS == 'ios'
-export default function CardHeader() {
+export default function CardHeader(route:any) {
 
     //const { user } = useAuth()
     const { top } = useSafeAreaInsets()
     const router = useRouter()
 
+    const handleGoBack = () => {
+        if (router.canGoBack()) {
+            router.back();
+        } else {
+            router.replace(route)
+        }
+    };
+
     return (
         <View style={{ paddingTop: ios ? top : top + 12 }} className='flex-row justify-between px-6 pb-6 bg-white'>
             <View>
-                <Pressable onPress={router.back}>
+                <Pressable onPress={handleGoBack}>
                     <Ionicons name="chevron-back" size={24} color={colors.primary} />
                 </Pressable>
             </View>

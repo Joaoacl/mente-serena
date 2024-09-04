@@ -4,6 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image'
 import { useAuth } from '../../context/authContext';
+import { colors } from '../../styles/colors';
 
 
 const blurhash =
@@ -30,7 +31,7 @@ export default function HomeHeader() {
             
             <View className='px-1'>
                 <Image
-                    style={{ height: hp(4.3), aspectRatio: 1, borderRadius: 100 }}
+                    style={{ height: hp(4.3), aspectRatio: 1, borderRadius: 100, borderWidth: 1, borderColor: colors.primary }}
                     source={user?.profileUrl}
                     placeholder={blurhash}
                     contentFit="cover"

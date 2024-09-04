@@ -8,8 +8,8 @@ export default function ExercisesCard({ imageSource, title, subTitle, route, bac
     return (
         <View>
             <Pressable
-                style={{ width: wp(90), height: hp(10), marginBottom: hp(2), backgroundColor }}
-                className='rounded-3xl px-4 flex-row gap-6 items-center'
+                style={{ width: wp(90), height: hp(18), marginBottom: hp(2), backgroundColor }}
+                className='rounded-3xl px-4 flex-col gap-4 items-center justify-center'
                 onPress={() => router.push(route)}
             >
                 <Image
@@ -17,16 +17,16 @@ export default function ExercisesCard({ imageSource, title, subTitle, route, bac
                     style={{ width: 35, height: 35 }}
                     resizeMode='contain'
                 />
-                <View className='flex-col'>
+                <View className='flex-col items-center'>
                     <Text
                         style={{ fontSize: hp(1.7) }}
-                        className='font-semiBold mr-8 text-white'
+                        className='font-semiBold text-white'
                     >
                         {title}
                     </Text>
                     <Text
                         style={{ fontSize: hp(1.5) }}
-                        className='font-regular mr-8 text-white'
+                        className='font-regular text-white'
                     >
                         {subTitle}
                     </Text>

@@ -14,12 +14,12 @@ export default function _layout() {
   return (
     <Tabs screenOptions={{
       tabBarStyle: {
-        height: hp(9),
+        height: hp(10),
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
         backgroundColor: colors.primary,
         borderTopWidth: hp(0),
-        padding: hp(2),
+        paddingVertical: hp(1),
         paddingHorizontal: hp(3.5),
       },
       tabBarLabelStyle: {
@@ -120,6 +120,7 @@ export default function _layout() {
           href: null
         }} />
 
+   
     </Tabs>
   )
 }
