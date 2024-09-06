@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, Keyboard, TextInput, Button, Pressable, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Keyboard, TextInput, Button, Pressable, TouchableOpacity, ActivityIndicator } from 'react-native';
 import MapView, { Marker, Region } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { fetchPsychologists } from '../../../services/fetchPsychologists';
@@ -16,8 +16,9 @@ interface PsychologistMarker {
 }
 
 export default function Psychologists() {
-  const [region, setRegion] = useState<Region | null>(null)
+  const [region, setRegion] = useState<Region | undefined>(undefined)
   const [markers, setMarkers] = useState<PsychologistMarker[]>([])
+  const [loading, setLoading] = useState(false);
 
   //const [city, setCity] = useState<string>('')
 
@@ -38,26 +39,42 @@ export default function Psychologists() {
         longitudeDelta: 0.0421,
       })
 
-      const psychologists = await fetchPsychologists(location.coords)
-      const newMarkers = psychologists.map((place) => ({
+      await loadPsychologists(location.coords);
+
+    })()
+  }, [])
+
+
+  const loadPsychologists = async (location: { latitude: number, longitude: number }) => {
+    setLoading(true);
+    try {
+      const psychologists = await fetchPsychologists(location);
+      const newMarkers = psychologists.map((place: any) => ({
         name: place.name,
         latitude: place.geometry.location.lat,
         longitude: place.geometry.location.lng,
         description: place.vicinity,
-      }))
+      }));
 
-      setMarkers(newMarkers)
-    })()
-  }, [])
+      setMarkers(newMarkers);
+    } catch (error) {
+      console.error('Erro ao buscar psicólogos:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   {/* 
   //Search psycologists from user input city
   const searchCity = async () => {
+    if (!city) return;
+
     try {
+      setLoading(true);
       const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
         params: {
           address: city,
-          key: 'api-key',
+          key: process.env.GOOGLE_PLACES_API_KEY,
         },
       });
 
@@ -70,22 +87,13 @@ export default function Psychologists() {
           longitudeDelta: 0.0421,
         });
 
-        // Busca os psicólogos na nova região
-        const psychologists = await fetchPsychologists(location);
-        console.log('Psychologists near user location:', psychologists);
-        const newMarkers = psychologists.map((place: any) => ({
-          name: place.name,
-          latitude: place.geometry.location.lat,
-          longitude: place.geometry.location.lng,
-          description: place.vicinity,
-        }));
-
-        console.log('New markers based on user location:', newMarkers);
-        setMarkers(newMarkers);
+        await loadPsychologists(location);
         Keyboard.dismiss();
       }
     } catch (error) {
       console.error("Erro ao buscar a cidade:", error);
+    } finally {
+      setLoading(false);
     }
   };
   */}
@@ -109,7 +117,10 @@ export default function Psychologists() {
       </View>
       */}
       <View className='flex-1 mb-6 mt-2' style={{borderRadius:20, overflow: 'hidden', }}>
-        {region && (
+      {loading ? (
+        <ActivityIndicator size="large" color={colors.primary} />
+      ) : (
+        
           <MapView
             style={{ flex: 1 ,width: wp(100), height: hp(100) }}
             region={region}
@@ -128,7 +139,8 @@ export default function Psychologists() {
               />
             ))}
           </MapView>
-        )}
+        
+      )}
       </View>
     </View>
   )

@@ -28,9 +28,9 @@ export const fetchPsychologists = async (location: Location): Promise<PlaceResul
       {
         params: {
           location: `${latitude},${longitude}`,
-          radius: 5000,
+          radius: 2000,
           type: 'doutor',
-          keyword: 'psychologist',
+          keyword: 'psicologos',
           key: GOOGLE_PLACES_API_KEY,
         },
       }

@@ -3,16 +3,17 @@ import React from 'react'
 import * as Linking from 'expo-linking';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Image } from 'expo-image';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { colors } from '../../../styles/colors';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+
 
 export default function Emergency() {
 
-  const blurhash =
-    'LFIr1=e.0moJysjsIoR+WBof$$ja';
+  const blurhash ='LFIr1=e.0moJysjsIoR+WBof$$ja';
+  const phoneNumber = '188'
 
   const handleCall = () => {
-    const phoneNumber = '188'
     Linking.openURL(`tel:${phoneNumber}`).catch(err => {
       Alert.alert('Erro', 'Não foi possível iniciar a ligação.')
       console.error(err)
@@ -25,7 +26,7 @@ export default function Emergency() {
       <View>
         <Image
           style={{ height: hp(14), aspectRatio: 1 }}
-          source={require('../../../assets/images/emergencyIcon.png')}
+          source={require('../../../assets/images/emergencyCall.png')}
           placeholder={blurhash}
           contentFit="contain"
           transition={500}
@@ -38,11 +39,11 @@ export default function Emergency() {
 
         <Text style={{ fontSize: hp(1.8) }} className='text-center font-medium text-primary mt-6'>Pressione o botão abaixo para ligar agora. Estamos aqui para ouvir, apoiar e ajudar!</Text>
       </View>
-      <View className='mt-12'>
+      <View className='mt-16'>
         <TouchableOpacity style={{
           width: 70,
           height: 70,
-          backgroundColor: colors.primary,
+          backgroundColor: colors.green[200],
           borderRadius: 50,
           justifyContent: 'center',
           alignItems: 'center',
@@ -52,7 +53,7 @@ export default function Emergency() {
           shadowRadius: 3.84,
           elevation: 5,
         }} onPress={handleCall}>
-          <Ionicons name="call" size={hp(5)} color={colors.secondary} />
+          <FontAwesome name="phone" size={hp(4.5)} color={colors.white} />
         </TouchableOpacity>
       </View>
     </View>

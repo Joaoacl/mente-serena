@@ -3,7 +3,7 @@ export const colors = {
 
     primary: "#8C6E74",
 
-    secondary: "#E9D2C3",
+    secondary: "#ffe6d5",
 
     green: {
         100: "#797A54",
