@@ -13,6 +13,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "extra": {
+      "GOOGLE_API_KEY": "AIzaSyBIWKNV2A48t3Hn9sJU_c1J1cCcnqj9z-c"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -31,7 +34,8 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-image-picker"
     ],
     "experiments": {
       "typedRoutes": true

@@ -126,7 +126,7 @@ export default function Psychologists() {
             region={region}
             onRegionChangeComplete={region => setRegion(region)}
             showsUserLocation={true}
-            minZoomLevel={15}
+            minZoomLevel={14}
             loadingEnabled={true}
             zoomEnabled={true}
           >

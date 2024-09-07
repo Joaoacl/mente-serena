@@ -103,11 +103,6 @@ export default function SignIn() {
           {/* Botão cadastrar */}
           <Button text='Cadastre-se' onPress={() => router.push('/signUp')} />
 
-
-          <Pressable className='items-center' >
-            <Text style={{ fontSize: hp(1.7) }} className='pt-6 underline text-primary font-regular'>Termos de Uso</Text>
-          </Pressable>
-
         </View>
       </View>
     </View>

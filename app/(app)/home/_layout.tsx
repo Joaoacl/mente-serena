@@ -14,7 +14,7 @@ export default function _layout() {
   return (
     <Tabs screenOptions={{
       tabBarStyle: {
-        height: hp(10),
+        height: hp(12),
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
         backgroundColor: colors.primary,

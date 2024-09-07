@@ -1,6 +1,6 @@
 // services/fetchPsychologists.ts
 import axios from 'axios';
-import { GOOGLE_PLACES_API_KEY } from '@env';
+import Constants from 'expo-constants';
 
 
 interface Location {
@@ -21,6 +21,7 @@ interface PlaceResult {
 
 export const fetchPsychologists = async (location: Location): Promise<PlaceResult[]> => {
   const { latitude, longitude } = location;
+  const googleApiKey = Constants.expoConfig?.extra?.GOOGLE_API_KEY;
 
   try {
     const response = await axios.get(
@@ -31,7 +32,7 @@ export const fetchPsychologists = async (location: Location): Promise<PlaceResul
           radius: 2000,
           type: 'doutor',
           keyword: 'psicologos',
-          key: GOOGLE_PLACES_API_KEY,
+          key: googleApiKey,
         },
       }
     );
