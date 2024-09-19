@@ -84,7 +84,7 @@ export default function SignIn() {
             {
               loading ? (
                 <View className='flex-row justify-center'>
-                  <ActivityIndicator size="large" color={colors.primary} />
+                    <Loading size={hp(5)} />                 
                 </View>
               ) : (
                 <Button text='Acessar' onPress={handleLogin} />

@@ -158,7 +158,7 @@ export default function SignUp() {
             <View className=''>
               {profileImage && <Image source={{ uri: profileImage }} style={{ width: 60, height: 60, borderRadius: 50, marginTop: 5, borderWidth: 2, borderColor: colors.primary }} />}
             </View>
-            <TouchableOpacity style={{ flexDirection: 'row', gap: 4, alignItems: 'center', justifyContent: 'center', marginTop: 5}} onPress={pickImage} >
+            <TouchableOpacity style={{ flexDirection: 'row', gap: 4, alignItems: 'center', justifyContent: 'center', marginTop: 5 }} onPress={pickImage} >
               <Feather name="image" size={hp(2.7)} color={colors.primary} />
               <Text style={{ fontSize: hp(2) }} className='flex-1 font-regular text-neutral-600'>
                 {profileImage ? "Alterar foto de perfil" : "Selecionar foto de perfil"}
@@ -175,7 +175,7 @@ export default function SignUp() {
             {
               loading ? (
                 <View className='flex-row justify-center'>
-                  <ActivityIndicator size="large" color={colors.primary} />
+                  <Loading size={hp(5)} />
                 </View>
               ) : (
                 <Button text='Cadastrar' onPress={handleRegister} />

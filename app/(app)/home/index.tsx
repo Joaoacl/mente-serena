@@ -28,12 +28,12 @@ export default function Home() {
 
         <HomeCard imageSource={require('../../../assets/icons/exercisesIcon.png')}
           title="Exercícios Mentais"
-          route="/home/exercises"
+          route="/(app)/exercises"
           backgroundColor={colors.brown[100]} />
 
         <HomeCard imageSource={require('../../../assets/icons/psychologyIcon.png')}
           title="Psicólogos Próximos"
-          route="/home/psychologists"
+          route="/(app)/psychologists"
           backgroundColor={colors.brown[200]} />
 
         <HomeCard imageSource={require('../../../assets/icons/videoIcon.png')}

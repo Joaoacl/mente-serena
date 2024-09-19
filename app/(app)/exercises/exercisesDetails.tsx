@@ -5,6 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { colors } from '../../../styles/colors';
+import Loading from '../../../components/loading/loading';
 
 
 type ExerciseDetails = {
@@ -41,8 +42,8 @@ export default function ExerciseDetails() {
     }, [id]);
 
     if (loading) {
-        return <View className='flex-row justify-center'>
-            <ActivityIndicator size="large" color={colors.primary} />
+        return <View className="items-center">
+            <Loading size={hp(10)} />
         </View>
     }
 
@@ -52,7 +53,6 @@ export default function ExerciseDetails() {
 
     return (
         <View className='flex-1 p-4'>
-
             <Text className='font-bold text-2xl mb-2'>{exercise.title}</Text>
             <Text className='text-lg mb-4'>{exercise.description}</Text>
             <Text className='text-base'>{exercise.content}</Text>

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, Keyboard, TextInput, Button, Pressable, TouchableOpacity, ActivityIndicator } from 'react-native';
 import MapView, { Marker, Region } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { fetchPsychologists } from '../../../services/fetchPsychologists';
+
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import axios from 'axios';
 import { colors } from '../../../styles/colors';
+import { fetchPsychologists } from '../../../services/fetchPsychologists';
+import Loading from '../../../components/loading/loading';
 
 
 interface PsychologistMarker {
@@ -116,9 +118,11 @@ export default function Psychologists() {
         </TouchableOpacity>
       </View>
       */}
-      <View className='flex-1 mb-6 mt-2' style={{borderRadius:20, overflow: 'hidden', }}>
+      <View className='flex-1 mt-4' style={{borderRadius:20, overflow: 'hidden', }}>
       {loading ? (
-        <ActivityIndicator size="large" color={colors.primary} />
+        <View className="items-center">
+        <Loading size={hp(10)} />
+        </View>
       ) : (
         
           <MapView
@@ -126,7 +130,7 @@ export default function Psychologists() {
             region={region}
             onRegionChangeComplete={region => setRegion(region)}
             showsUserLocation={true}
-            minZoomLevel={15}
+            
             loadingEnabled={true}
             zoomEnabled={true}
           >
