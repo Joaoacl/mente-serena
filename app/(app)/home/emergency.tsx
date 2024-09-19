@@ -36,7 +36,7 @@ export default function Emergency() {
         */}
 
         <View style={{ height: hp(20), aspectRatio: 1 }}>
-          <LottieView style={{ flex: 1 }} source={require('../../../assets/images/emergency.json')} resizeMode='cover' autoPlay loop />
+          <LottieView style={{ flex: 1 }} source={require('../../../assets/images/emergencyy.json')} resizeMode='cover' autoPlay loop />
         </View>
       </View>
       <View className='px-6 mt-6'>
