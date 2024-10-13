@@ -9,11 +9,25 @@ export default function Layout() {
       <Stack.Screen name="exercises/index" options={{
         header: () => <CardHeader route={'/home'} />,
       }} />
-      <Stack.Screen name="exercises/exercisesDetails" options={{
+      <Stack.Screen name="exercises/relaxation" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+      <Stack.Screen name="exercises/emotional" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+      <Stack.Screen name="exercises/meditation" options={{
         header: () => <CardHeader route={'/home'} />,
       }} />
       {/* Outra rota aqui /psychologists*/}
        <Stack.Screen name="psychologists/index" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+      {/* Outra rota aqui /videos*/}
+      <Stack.Screen name="videos/index" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+      {/* Outra rota aqui /infopanel*/}
+      <Stack.Screen name="infopanel/index" options={{
         header: () => <CardHeader route={'/home'} />,
       }} />
       {/* Outra rota aqui /termsOfUse*/}

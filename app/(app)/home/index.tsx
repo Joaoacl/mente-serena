@@ -38,12 +38,12 @@ export default function Home() {
 
         <HomeCard imageSource={require('../../../assets/icons/videoIcon.png')}
           title="Vídeos de Autoajuda"
-          route="/home/videos"
+          route="/(app)/videos"
           backgroundColor={colors.green[100]} />
 
         <HomeCard imageSource={require('../../../assets/icons/infoIcon.png')}
           title="Painel Informátivo"
-          route="/home/infopanel"
+          route="/(app)/infopanel"
           backgroundColor={colors.green[200]} />
       </View>
 

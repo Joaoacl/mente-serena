@@ -91,34 +91,10 @@ export default function _layout() {
         }}
       />
 
-      {/* Tabs Cards */}
-      <Tabs.Screen
-        name='exercises'
-        options={{
-          header: () => <CardHeader />,
-          href: null
-        }} />
+    
 
-      <Tabs.Screen
-        name='psychologists'
-        options={{
-          header: () => <CardHeader />,
-          href: null
-        }} />
+      
 
-      <Tabs.Screen
-        name='videos'
-        options={{
-          header: () => <CardHeader />,
-          href: null
-        }} />
-
-      <Tabs.Screen
-        name='infopanel'
-        options={{
-          header: () => <CardHeader />,
-          href: null
-        }} />
 
    
     </Tabs>

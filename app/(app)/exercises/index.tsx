@@ -9,35 +9,43 @@ import { db } from '../../../firebaseConfig';
 import Loading from '../../../components/loading/loading';
 
 type ExerciseData = {
-    id: string;
-    title: string;
-    description: string;
-    imageSource: string;
+    id: string
+    title: string
+    description: string
+    imageSource: string
 };
 
 export default function Exercises() {
 
-    const [data, setData] = useState<ExerciseData[]>([]);
-    const [loading, setLoading] = useState(true);
-    const router = useRouter();
+    const [data, setData] = useState<ExerciseData[]>([])
+    const [loading, setLoading] = useState(true)
+    const router = useRouter()
 
-    const handlePress = (id: string) => {
-        router.push({
-            pathname: '/exercises/exercisesDetails',
-            params: { id },
-        });
+    const routeMap: { [key: string]: string } = {
+        'relaxamento': '/exercises/relaxation',
+        'bem-estar emocional': '/exercises/emotional',
+        'meditação': '/exercises/meditation',
     };
 
+    const handlePress = (title: string) => {
+        const route = routeMap[title.toLowerCase()]
+        if (route) {
+            router.push(route)
+        } else {
+            console.log('Exercício não encontrado')
+        }
+    };
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, 'exercises'));
+                const querySnapshot = await getDocs(collection(db, 'exercises'))
                 const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as ExerciseData[];
-                setData(items);
-                setLoading(false);
+                setData(items)
+                setLoading(false)
             } catch (error) {
-                console.error("Error fetching data: ", error);
-                setLoading(false);
+                console.error("Error fetching data: ", error)
+                setLoading(false)
             }
         };
 
@@ -48,7 +56,7 @@ export default function Exercises() {
         <Pressable
             style={{ width: wp(90), height: hp(15), backgroundColor: colors.brown[100] }}
             className='rounded-3xl px-4 flex-col gap-2 items-center justify-center mb-4'
-            onPress={() => handlePress(item.id)}
+            onPress={() => handlePress(item.title)}
         >
             <Image
                 source={{ uri: item.imageSource }}

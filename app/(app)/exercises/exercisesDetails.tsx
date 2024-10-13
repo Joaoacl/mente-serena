@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ActivityIndicator } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { View, Text, Image, ActivityIndicator, ListRenderItem, Pressable } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -8,17 +8,16 @@ import { colors } from '../../../styles/colors';
 import Loading from '../../../components/loading/loading';
 
 
-type ExerciseDetails = {
-    title: string;
-    description: string;
-    imageSource: string;
-    content: string;
+type ExerciseData = {
+    id: string
+    title: string
 };
 
 export default function ExerciseDetails() {
-    const [exercise, setExercise] = useState<ExerciseDetails | null>(null);
+    const [exercise, setExercise] = useState<ExerciseData | null>(null);
     const [loading, setLoading] = useState(true);
     const { id } = useLocalSearchParams(); // Obtem o ID do exercício da rota
+    const router = useRouter()
 
     useEffect(() => {
         const fetchExercise = async () => {
@@ -27,7 +26,7 @@ export default function ExerciseDetails() {
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
-                    setExercise(docSnap.data() as ExerciseDetails);
+                    setExercise(docSnap.data() as ExerciseData);
                 } else {
                     console.log("No such document!");
                 }
@@ -41,22 +40,56 @@ export default function ExerciseDetails() {
         fetchExercise();
     }, [id]);
 
-    if (loading) {
-        return <View className="items-center">
-            <Loading size={hp(10)} />
-        </View>
-    }
+    const routeMap: { [key: string]: string } = {
+        'relaxamento': '/exercises/relaxation',
+        'bem-estar emocional': '/exercises/emotional',
+        'meditação': '/exercises/meditation',
+    };
+    
+    const handlePress = (title: string) => {
+        const route = routeMap[title.toLowerCase()]
+        if (route) {
+            router.push(route)
+        } else {
+            console.log('Exercício não encontrado')
+        }
+    };
 
-    if (!exercise) {
-        return <Text>Exercício não encontrado</Text>;
-    }
+    const renderItem: ListRenderItem<ExerciseData> = ({ item }) => (
+        <Pressable
+            style={{ width: wp(90), height: hp(15), backgroundColor: colors.brown[100] }}
+            className='rounded-3xl px-4 flex-col gap-2 items-center justify-center mb-4'
+            onPress={() => handlePress(item.title)}
+        >
+            <Image
+                source={{ uri: item.imageSource }}
+                style={{ width: 35, height: 35 }}
+                className='items-center'
+            />
+            <View className='items-center'>
+                <Text className='font-bold text-white' style={{ fontSize: hp(2) }}>{item.title}</Text>
+                <Text className='text-white' style={{ fontSize: hp(1.5) }}>{item.description}</Text>
+            </View>
+        </Pressable>
+    );
 
     return (
-        <View className='flex-1 p-4'>
-            <Text className='font-bold text-2xl mb-2'>{exercise.title}</Text>
-            <Text className='text-lg mb-4'>{exercise.description}</Text>
-            <Text className='text-base'>{exercise.content}</Text>
+        <View className='items-center mt-1 flex-1'>
+            <Text style={{ fontSize: hp(2) }} className='font-Bold text-primary mb-4'>Exercícios Mentais</Text>
+            <View>
+                {loading ? (
+                    <View className="items-center">
+                        <Loading size={hp(10)} />
+                    </View>
+                ) : (
+                    <FlatList
+                        data={data}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.id}
+                    />
+                )}
+            </View>
         </View>
-    );
+    )
 };
 
