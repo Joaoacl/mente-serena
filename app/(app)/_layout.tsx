@@ -19,7 +19,7 @@ export default function Layout() {
         header: () => <CardHeader route={'/home'} />,
       }} />
       {/* Outra rota aqui /psychologists*/}
-       <Stack.Screen name="psychologists/index" options={{
+      <Stack.Screen name="psychologists/index" options={{
         header: () => <CardHeader route={'/home'} />,
       }} />
       {/* Outra rota aqui /videos*/}
@@ -32,6 +32,10 @@ export default function Layout() {
       }} />
       {/* Outra rota aqui /termsOfUse*/}
       <Stack.Screen name="termsOfUse/index" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+      {/* Outra rota aqui /tripsDetails*/}
+      <Stack.Screen name="tipsDetails/index" options={{
         header: () => <CardHeader route={'/home'} />,
       }} />
     </Stack>

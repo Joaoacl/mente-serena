@@ -77,7 +77,7 @@ export default function Relaxamento() {
             )}
              {currentStep === steps.length - 1 && (
                 <View style={{ height: hp(20), aspectRatio: 1 }}>
-                    <LottieView style={{ flex: 1 }} source={require('../../../assets/images/check.json')} resizeMode='cover' autoPlay loop />
+                    <LottieView style={{ flex: 1 }} source={require('../../../assets/images/check.json')} resizeMode='cover' autoPlay />
                 </View>
             )}
 
