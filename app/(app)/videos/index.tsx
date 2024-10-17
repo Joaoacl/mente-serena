@@ -107,9 +107,10 @@ export default function AutoAjudaVideos() {
   }, [selectedCategory])
 
   const renderVideo = ({ item }: { item: VideoData }) => (
-    <Pressable className='bg-green-100 rounded-xl mb-3' onPress={() => console.log('Abrir vídeo', item.videoUrl)}>
-      <Image source={{ uri: `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg` }} style={{ width: '100%', height: 180, resizeMode: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12 }} />
-      <Text className='text-left font-medium p-2 text-white' style={{ fontSize: hp(1.5) }}>{item.title}</Text>
+    <Pressable style={{width: wp(92), height: hp(28), borderRadius: 12,
+    }} className='bg-green-100 rounded-2xl mb-3' onPress={() => console.log('Abrir vídeo', item.videoUrl)}>
+      <Image source={{ uri: `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg` }} style={{ width: '100%', height: hp(20), resizeMode: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12}} />
+      <Text className='text-left font-medium p-2 text-white' style={{ fontSize: hp(1.5), height: hp(7), overflow: 'hidden', }} numberOfLines={2}>{item.title}</Text>
     </Pressable>
   );
 
@@ -155,7 +156,6 @@ export default function AutoAjudaVideos() {
           </View>
         ) : (
           <FlatList
-            className='px-4'
             showsVerticalScrollIndicator={false}
             data={videos}
             renderItem={renderVideo}
@@ -166,6 +166,9 @@ export default function AutoAjudaVideos() {
                 onRefresh={onRefresh}
               />
             }
+            contentContainerStyle={{
+              paddingBottom: hp(20)
+            }}
           />
         )}
       </View>

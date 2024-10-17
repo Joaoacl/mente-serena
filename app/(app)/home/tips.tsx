@@ -1,10 +1,9 @@
-import { View, Text, ActivityIndicator, ListRenderItem, Image, Pressable, FlatList } from 'react-native'
+import { View, Text, ActivityIndicator, ListRenderItem, Image, Pressable, FlatList, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import ExercisesCard from '../../../components/cards/exercisesCard';
 import { colors } from '../../../styles/colors';
 import { useRouter } from 'expo-router';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import Loading from '../../../components/loading/loading';
 import TipsCard from '../../../components/cards/tipsCard';
@@ -19,22 +18,30 @@ export default function Tips() {
 
   const [tips, setTips] = useState<TipData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchTips = async () => {
-      const tipsCollection = collection(db, 'tips');
-      const tipsSnapshot = await getDocs(tipsCollection);
-      const tipsList = tipsSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as TipData[];
-      setTips(tipsList);
-      setLoading(false);
-    };
+  const fetchTips = async () => {
+    const tipsCollection = collection(db, 'tips');
+    const tipsQuery = query(tipsCollection, orderBy('date', 'desc')); 
+    const tipsSnapshot = await getDocs(tipsQuery);
+    const tipsList = tipsSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as TipData[];
+    setTips(tipsList);
+    setLoading(false);
+  };
 
+  useEffect(() => {
     fetchTips();
   }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchTips();   
+    setRefreshing(false); 
+  };
 
   const renderTip: ListRenderItem<TipData> = ({ item }) => (
     <TipsCard title={item.title} text={item.text} backgroundColor={colors.green[300]} route={`/tipsDetails?id=${item.id}`} />
@@ -50,9 +57,20 @@ export default function Tips() {
           </View>
         ) : (
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={tips}
             renderItem={renderTip}
             keyExtractor={(item) => item.id}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing} 
+                onRefresh={onRefresh}
+                colors={[colors.primary]}
+              />
+            }
+            contentContainerStyle={{
+              paddingBottom: hp(6),
+            }}
           />
         )}
       </View>
