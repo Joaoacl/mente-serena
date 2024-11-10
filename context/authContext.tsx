@@ -8,6 +8,8 @@ interface User {
     email: string;
     username: string;
     profileUrl: string;
+    phone: string;
+    birthDate: string;
 }
 
 interface AuthContextType {
@@ -16,6 +18,7 @@ interface AuthContextType {
     login: (credentials: AuthCredentials) => Promise<{ success: boolean; data?: any; msg?: string }>;
     logout: () => Promise<{ success: boolean; msg?: string; error?: any }>;
     register: (credentials: RegisterCredentials) => Promise<{ success: boolean; data?: any; msg?: string }>;
+    updateUserProfile: (userId: string, updates: Partial<User>) => Promise<{ success: boolean; error?: any }>;
 }
 
 interface AuthCredentials {
@@ -64,9 +67,27 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
                 email: email,
                 username: data.username,
                 profileUrl: data.profileUrl,
+                phone: data.phone, 
+                birthDate: data.birthDate,
             })
         }
     }
+
+    const updateUserProfile = async (userId: string, updates: Partial<User>) => {
+        try {
+            const docRef = doc(db, "users", userId);
+            await setDoc(docRef, updates, { merge: true });
+            
+            // Atualizar o estado do usuário localmente
+            setUser((prevUser) => prevUser ? { ...prevUser, ...updates } : prevUser);
+            
+            return { success: true };
+        } catch (error) {
+            console.error("Erro ao atualizar perfil do usuário:", error);
+            return { success: false, error };
+        }
+    }
+    
 
     const login = async ({ email, password }: AuthCredentials) => {
         try {
@@ -113,7 +134,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, login, logout, register }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, login, logout, register, updateUserProfile }}>
             {children}
         </AuthContext.Provider>
     )

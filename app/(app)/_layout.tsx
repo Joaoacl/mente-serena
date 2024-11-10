@@ -30,12 +30,27 @@ export default function Layout() {
       <Stack.Screen name="infopanel/index" options={{
         header: () => <CardHeader route={'/home'} />,
       }} />
+      <Stack.Screen name="infopanel/infoDetails" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
       {/* Outra rota aqui /termsOfUse*/}
       <Stack.Screen name="termsOfUse/index" options={{
         header: () => <CardHeader route={'/home'} />,
       }} />
+      {/* Outra rota aqui /policyAndPrivacy*/}
+      <Stack.Screen name="policyAndPrivacy/index" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+       {/* Outra rota aqui /support*/}
+       <Stack.Screen name="support/index" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
       {/* Outra rota aqui /tripsDetails*/}
       <Stack.Screen name="tipsDetails/index" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+      {/* Outra rota aqui /userProfile*/}
+      <Stack.Screen name="userProfile/index" options={{
         header: () => <CardHeader route={'/home'} />,
       }} />
     </Stack>

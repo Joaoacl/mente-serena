@@ -18,7 +18,7 @@ export default function Profile() {
   }
 
   return (
-    <View className='mt-4'>
+    <View className='mt-4 px-4'>
       {/* Foto perfil usuário */}
       <View className='flex-col items-center'>
         <Image
@@ -31,13 +31,20 @@ export default function Profile() {
         <Text className='mt-2 text-primary font-semiBold text-center' style={{ fontSize: hp(2.2) }}>{user?.username}</Text>
       </View>
 
-      <View className='px-8 mt-10'>
-        <MenuItem text="Informações pessoais" />
-        <View className="border-b border-primary mt-2 mb-2" />
-        <MenuItem text="Segurança e Privacidade" />
-        <View className="border-b border-primary mt-2 mb-2" />
-        <MenuItem text="Ajuda e Suporte" />
-        <View className="border-b border-primary mt-2 mb-2" />
+      <View style={{
+        backgroundColor: "#f3f3f3",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 4,
+      }} className='mt-6 mb-6 p-4 rounded-2xl'>
+        <MenuItem text="Informações pessoais" route="/(app)/userProfile" />
+        <View className="border-b border-primary mt-3 mb-3" />
+        <MenuItem text="Ajuda e Suporte" route="/(app)/support" />
+        <View className="border-b border-primary mt-3 mb-3" />
+        <MenuItem text="Politica e Privacidade" route="/(app)/policyAndPrivacy" />
+        <View className="border-b border-primary mt-3 mb-3" />
         <MenuItem text="Termos de Uso" route="/(app)/termsOfUse" />
       </View>
 

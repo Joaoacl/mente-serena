@@ -5,6 +5,7 @@ import axios from 'axios';
 import Loading from '../../../components/loading/loading';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { colors } from '../../../styles/colors';
+import Constants from 'expo-constants';
 
 type VideoData = {
   id: string
@@ -22,6 +23,8 @@ export default function AutoAjudaVideos() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>('Ansiedade')
 
   const categories = ['Ansiedade', 'Preocupação', 'Desânimo', 'Depressão', 'Pânico']
+
+  const googleApiKey = Constants.expoConfig?.extra?.GOOGLE_YT_API_KEY;
 
   const fetchVideos = async (query: string) => {
     setLoading(true)
@@ -42,15 +45,19 @@ export default function AutoAjudaVideos() {
       const response = await axios.get(`https://www.googleapis.com/youtube/v3/search`, {
         params: {
           part: 'snippet',
-          q: `${query} autoajuda`,
+          q: `${query} autoajuda OR bem-estar OR motivação -oração -religião -evangelho`,
           type: 'video',
           maxResults: 5,
           order: 'relevance',
           videoDuration: 'medium',
+          videoCategoryId: '27', // Categoria "Educação"
+          safeSearch: 'strict',
+          relevanceLanguage: 'pt',
           fields: 'items(id/videoId,snippet/title,snippet/thumbnails/default/url)',
-          key: '',
+          key: googleApiKey,
         },
       })
+      
 
       console.log('Resposta da API:', response.data)
 

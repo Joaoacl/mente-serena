@@ -5,6 +5,7 @@ import HomeHeader from '../../../components/homeheader/homeHeader'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Entypo from '@expo/vector-icons/Entypo';
 import { colors } from '../../../styles/colors';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fontFamily } from '../../../styles/fontFamily';
@@ -39,9 +40,10 @@ export default function _layout() {
           title: "Home",
           tabBarIcon: ({ focused, size }) => {
             if (focused) {
-              return <FontAwesome name="home" size={size} color={colors.secondary} />
+              return <Entypo name="home" size={size} color={colors.secondary} />
+              
             }
-            return <FontAwesome name="home" size={size} color={colors.white} />
+            return <Entypo name="home" size={size} color={colors.white} />
           },
         }}
       />

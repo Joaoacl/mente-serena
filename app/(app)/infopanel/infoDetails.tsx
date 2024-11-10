@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ActivityIndicator } from 'react-native';
+import { View, Text, Image, ActivityIndicator, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
@@ -11,21 +11,23 @@ import Loading from '../../../components/loading/loading';
 type TipDetails = {
     title: string;
     text: string;
+    description: string;
+    text1: string;
 };
 
 export default function TipsDetails() {
-    const [tip, setTip] = useState<TipDetails | null>(null);
+    const [info, setInfo] = useState<TipDetails | null>(null);
     const [loading, setLoading] = useState(true);
-    const { id } = useLocalSearchParams(); // Obtem o ID do exercício da rota
+    const { id } = useLocalSearchParams();
 
     useEffect(() => {
-        const fetchTip = async () => {
+        const fetchInfo = async () => {
             try {
-                const docRef = doc(db, 'tips', id as string);
+                const docRef = doc(db, 'info', id as string);
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
-                    setTip(docSnap.data() as TipDetails);
+                    setInfo(docSnap.data() as TipDetails);
                 } else {
                     console.log("No such document!");
                 }
@@ -36,7 +38,7 @@ export default function TipsDetails() {
             }
         };
 
-        fetchTip();
+        fetchInfo();
     }, [id]);
 
     if (loading) {
@@ -45,20 +47,18 @@ export default function TipsDetails() {
         </View>
     }
 
-    if (!tip) {
-        return <Text>Dica não encontrada</Text>;
+    if (!info) {
+        return <Text>Informações não encontradas</Text>;
     }
 
     return (
         <View className='items-center mt-1 flex-1'>
-            <Text style={{ fontSize: hp(2) }} className='font-Bold text-primary mb-4'>{tip.title}</Text>
-            <View className='items-center px-6'>
-                <Text style={{ fontSize: hp(2) }} className='mb-4 text-justify font-regular text-primary'>{tip.text}</Text>
-
-                <View className='mt-4'>
-                    <Text className='text-primary'>Pratique um de nossos exercícios!</Text>
+            <Text style={{ fontSize: hp(2) }} className='font-Bold text-primary mb-4'>{info.title}</Text>
+            <ScrollView>
+                <View className='items-center px-7'>
+                    <Text style={{ fontSize: hp(1.9) }} className='mb-4 text-justify font-regular text-primary'>{info.description}</Text>
                 </View>
-            </View>
+            </ScrollView>
         </View>
     );
 };
