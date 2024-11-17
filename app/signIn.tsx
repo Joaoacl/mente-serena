@@ -40,6 +40,7 @@ export default function SignIn() {
     }
   }
 
+
   return (
     <View className='flex-1' style={{ backgroundColor: colors.white }}>
       <StatusBar style="dark" />
@@ -75,7 +76,9 @@ export default function SignIn() {
                 secureTextEntry={true} />
             </View>
           </View>
-          <Text style={{ fontSize: hp(1.8) }} className='text-primary font-regular text-left'>Esqueceu sua senha?</Text>
+          <TouchableOpacity onPress={() => router.push('/resetPassword')}>
+            <Text style={{ fontSize: hp(1.8) }} className='text-primary font-regular text-left'>Esqueceu sua senha?</Text>
+          </TouchableOpacity>
         </View>
         <View className='px-2'>
 
@@ -84,7 +87,7 @@ export default function SignIn() {
             {
               loading ? (
                 <View className='flex-row justify-center'>
-                    <Loading size={hp(5)} />                 
+                  <Loading size={hp(5)} />
                 </View>
               ) : (
                 <Button text='Acessar' onPress={handleLogin} />

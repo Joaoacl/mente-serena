@@ -4,11 +4,12 @@ import { useAuth } from '../../../context/authContext'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import HomeCard from '../../../components/cards/homeCard';
 import { colors } from '../../../styles/colors';
+import HomeCardAlter from '../../../components/cards/homeCardAlter';
 
 export default function Home() {
-  
+
   const { user } = useAuth()
- 
+
   console.log('user data: ', user)
 
   return (
@@ -45,6 +46,11 @@ export default function Home() {
           title="Painel Informátivo"
           route="/(app)/infopanel"
           backgroundColor={colors.green[200]} />
+
+        <HomeCardAlter imageSource={require('../../../assets/icons/feelingIcon.png')}
+          title="Como você está se sentindo?"
+          route="/(app)/feeling"
+          backgroundColor={colors.green[300]} />
       </View>
 
 

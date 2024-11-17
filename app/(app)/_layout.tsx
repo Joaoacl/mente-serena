@@ -53,6 +53,22 @@ export default function Layout() {
       <Stack.Screen name="userProfile/index" options={{
         header: () => <CardHeader route={'/home'} />,
       }} />
+      {/* Outra rota aqui /feeling*/}
+      <Stack.Screen name="feeling/index" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+      {/* Outra rota aqui /feeling/report*/}
+      <Stack.Screen name="feeling/report" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+      {/* Outra rota aqui /feeling/feelings*/}
+       <Stack.Screen name="feeling/feelings" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
+      {/* Outra rota aqui /feeling/reportDetails*/}
+      <Stack.Screen name="feeling/reportDetails" options={{
+        header: () => <CardHeader route={'/home'} />,
+      }} />
     </Stack>
   )
 }

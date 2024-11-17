@@ -16,6 +16,8 @@ export const colors = {
         200: "#8A7358"
     },
 
-    
+    gray: "#f6f6f6",
+
+    shadePrimary: "#a7888e"
 }
 

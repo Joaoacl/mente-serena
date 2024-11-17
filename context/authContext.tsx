@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User as FirebaseUser } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User as FirebaseUser, sendPasswordResetEmail } from "firebase/auth";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebaseConfig";
 import { addDoc, doc, getDoc, setDoc } from "firebase/firestore";
@@ -19,6 +19,8 @@ interface AuthContextType {
     logout: () => Promise<{ success: boolean; msg?: string; error?: any }>;
     register: (credentials: RegisterCredentials) => Promise<{ success: boolean; data?: any; msg?: string }>;
     updateUserProfile: (userId: string, updates: Partial<User>) => Promise<{ success: boolean; error?: any }>;
+    resetPassword: (email: string) => Promise<{ success: boolean; msg?: string }>;
+    loading: boolean;
 }
 
 interface AuthCredentials {
@@ -41,8 +43,11 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     const [user, setUser] = useState<User | null>(null)
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
+    const [loading, setLoading] = useState<boolean>(true);
+
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, async (firebaseUser: FirebaseUser | null) => {
+            setLoading(true);
             if (firebaseUser) {
 
                 await updateUserData(firebaseUser.uid, firebaseUser.email || "")
@@ -52,6 +57,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
                 setIsAuthenticated(false)
                 setUser(null)
             }
+            setLoading(false);
         })
         return unsub
     }, [])
@@ -133,8 +139,20 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         }
     }
 
+    const resetPassword = async (email: string) => {
+        try {
+            await sendPasswordResetEmail(auth, email);
+            return { success: true };
+        } catch (error: any) {
+            let msg = error.message;
+            if (msg.includes('(auth/invalid-email)')) msg = 'E-mail inválido!';
+            if (msg.includes('(auth/user-not-found)')) msg = 'Usuário não encontrado!';
+            return { success: false, msg };
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, login, logout, register, updateUserProfile }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, login, logout, register, updateUserProfile, resetPassword, loading }}>
             {children}
         </AuthContext.Provider>
     )

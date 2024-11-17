@@ -4,32 +4,37 @@ import { Slot, useRouter, useSegments, SplashScreen } from 'expo-router'
 import "../global.css"
 import { AuthContextProvider, useAuth } from '../context/authContext'
 import { useFonts, Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, Poppins_300Light } from '@expo-google-fonts/poppins'
+import { SQLiteProvider } from 'expo-sqlite'
+import { initializeDatabase } from '../database/initializeDatabase'
 
 
 const MainLayout = () => {
-    const { isAuthenticated } = useAuth()
-    const segments = useSegments()
-    const router = useRouter()
+    const { isAuthenticated, loading } = useAuth();
+    const segments = useSegments();
+    const router = useRouter();
 
     useEffect(() => {
-        //verifica se o usuário está autenticado
-        if (typeof isAuthenticated == 'undefined') return
-        const inApp = segments[0] == '(app)'
-        if (isAuthenticated && !inApp) {
-            //redireciona para home
-            router.replace('/home/')
-        } else if (isAuthenticated == false) {
-            //redireciona para signIn
-            router.replace('/signIn')
-        }
-    }, [isAuthenticated])
+        if (loading) return;
 
-    return <Slot />
-}
+        const inApp = segments[0] === '(app)';
+        if (isAuthenticated && !inApp) {
+            router.replace('/home');
+        } else if (!isAuthenticated) {
+            router.replace('/signIn');
+        }
+    }, [isAuthenticated, loading]);
+
+    return (
+        <SQLiteProvider databaseName='menteSerena.db' onInit={initializeDatabase}>
+            <Slot />
+        </SQLiteProvider>
+    );
+};
+
 
 export default function RootLayout() {
 
-    {/* FontFamily */}
+    {/* FontFamily */ }
     const [fontsLoaded, fontError] = useFonts({
         Poppins_300Light,
         Poppins_400Regular,
@@ -42,7 +47,7 @@ export default function RootLayout() {
         if (fontsLoaded || fontError) {
             SplashScreen.hideAsync()
         }
-    }, [fontsLoaded, fontError]) 
+    }, [fontsLoaded, fontError])
 
     if (!fontsLoaded && !fontError) {
         return null
