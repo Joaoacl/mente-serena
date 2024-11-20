@@ -6,7 +6,8 @@ export type ReportDatabase = {
     report: string
     feelings: string
     date: string
-    userId: string;
+    userId: string
+    emotion: string
 }
 
 export function useReportDatabase(){
@@ -14,9 +15,9 @@ export function useReportDatabase(){
     const { user } = useAuth();
 
     async function create(data: Omit<ReportDatabase, "id">) {
-        const currentDate = new Date().toISOString();
+        
         const statement = await database.prepareAsync(
-            "INSERT INTO reports (report, feelings, date, userId) VALUES ($report, $feelings, $date, $userId)"
+            "INSERT INTO reports (report, feelings, date, userId, emotion) VALUES ($report, $feelings, $date, $userId, $emotion)"
         )
 
         console.log("Salvando no banco de dados:", data);
@@ -27,6 +28,7 @@ export function useReportDatabase(){
                 $feelings: data.feelings,
                 $date: data.date,
                 $userId: data.userId,
+                $emotion: data.emotion,
             })
 
             const insertedRowId = result.lastInsertRowId.toLocaleString()

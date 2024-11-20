@@ -169,12 +169,15 @@ export default function SignUp() {
 
         </View>
         <View className='px-2 gap-4'>
+          
+          {/*
           <View >
             <Text style={{ fontSize: hp(1.5) }} className='font-regular text-primary text-center'>Ao cadastrar-se você concorda com nossos</Text>
-            <Pressable onPress={() => router.push('/termsOfUse')}>
+            <Pressable onPress={() => router.navigate('/termsOfUse')}>
               <Text style={{ fontSize: hp(1.5) }} className='font-semiBold text-primary text-center underline'>termos de uso</Text>
             </Pressable>
           </View>
+          */}
 
           {/* Botão cadastrar */}
           <View>

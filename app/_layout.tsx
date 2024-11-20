@@ -25,9 +25,7 @@ const MainLayout = () => {
     }, [isAuthenticated, loading]);
 
     return (
-        <SQLiteProvider databaseName='menteSerena.db' onInit={initializeDatabase}>
-            <Slot />
-        </SQLiteProvider>
+        <Slot />
     );
 };
 
@@ -55,7 +53,9 @@ export default function RootLayout() {
 
     return (
         <AuthContextProvider>
-            <MainLayout />
+            <SQLiteProvider databaseName='menteSerena.db' onInit={initializeDatabase}>
+                <MainLayout />
+            </SQLiteProvider>
         </AuthContextProvider>
     )
 }

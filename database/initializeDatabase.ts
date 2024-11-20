@@ -6,9 +6,10 @@ export async function initializeDatabase(database: SQLiteDatabase) {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             report TEXT,
             feelings TEXT,
-            date TEXT
-            userId TEXT
+            date TEXT,
+            userId TEXT,
+            emotion TEXT
         )  
     `)
-
+    
 }

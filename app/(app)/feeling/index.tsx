@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ActivityIndicator, RefreshControl, Pressable } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, RefreshControl, Pressable, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Button from '../../../components/button/button';
@@ -8,6 +8,7 @@ import { colors } from '../../../styles/colors';
 import Loading from '../../../components/loading/loading';
 import { Href } from 'expo-router';
 import { useAuth } from '../../../context/authContext';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function Feeling() {
     const router = useRouter();
@@ -66,13 +67,23 @@ export default function Feeling() {
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.1,
                 shadowRadius: 5,
-                elevation: 2,
-                height: hp(22),
+                elevation: 1,
+                height: hp(24),
                 justifyContent: 'space-between'
             }}>
                 <View className='flex-row items-center justify-between'>
-                    <Text style={{ fontSize: hp(2), fontWeight: 'bold', color: colors.gray }}>Relato</Text>
-                    <Text style={{ fontSize: hp(1.6), fontWeight: 'bold', color: colors.gray }}>
+                    <View style={{
+                        borderRadius: 10,
+                        alignItems: 'center',
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.1,
+                        shadowRadius: 3,
+                        elevation: 5,
+                    }}>
+                        <Text style={{ fontSize: 18 }}>{item.emotion}</Text>
+                    </View>
+                    <Text style={{ fontSize: hp(1.6), fontWeight: 'bold', color: colors.ligth }}>
                         {new Date(item.date).toLocaleDateString('pt-BR', {
                             day: '2-digit',
                             month: '2-digit',
@@ -80,15 +91,16 @@ export default function Feeling() {
                         })}</Text>
                 </View>
 
+                <Text className='font-semiBold' style={{ fontSize: hp(1.8), color: colors.ligth }}>Relato</Text>
                 <Text
-                    style={{ fontSize: hp(1.8), color: colors.gray }}
+                    style={{ fontSize: hp(1.7), color: colors.ligth }}
                     className='font-regular text-justify'
                     numberOfLines={3}
                     ellipsizeMode='tail'>{item.report}</Text>
 
-                <Text style={{ fontSize: hp(2), fontWeight: 'bold', color: colors.gray, marginTop: 5 }}>Sentimentos</Text>
+                <Text className='font-semiBold' style={{ fontSize: hp(1.8), color: colors.ligth, marginTop: 5 }}>Sentimentos</Text>
                 <Text
-                    style={{ fontSize: hp(1.8), color: colors.gray }}
+                    style={{ fontSize: hp(1.7), color: colors.ligth }}
                     className='font-medium'
                     numberOfLines={1}
                     ellipsizeMode='tail'>{item.feelings || "Nenhum sentimento registrado"}</Text>
@@ -100,7 +112,17 @@ export default function Feeling() {
         <View className='mt-1 flex-1 px-4'>
             <Text style={{ fontSize: hp(2) }} className='font-Bold text-primary mb-4 text-center'>Como está se sentindo</Text>
 
-            <Button text='Adicionar relato' onPress={() => router.push('/feeling/report')} />
+            <View className='items-center'>
+                <TouchableOpacity style={{ backgroundColor: colors.primary, borderRadius: 10, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: hp(5.5), width: '100%' }} onPress={() => router.push('/feeling/report')}>
+                    <Text style={{ fontSize: hp(2.1) }} className='text-white font-Bold tracking-wider mr-2'>
+                        Adicionar relato
+                    </Text>
+
+                    <MaterialCommunityIcons name="pencil-plus" size={24} color={colors.white}/>
+                </TouchableOpacity>
+            </View>
+
+           
 
             <View className='mt-4'>
                 <Text style={{ fontSize: hp(1.8) }} className='text-primary font-medium'>Meus relatos</Text>

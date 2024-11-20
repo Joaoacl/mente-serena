@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Pressable, Linking } from 'react-native';
+import { View, Text, ScrollView, Pressable, Linking, Alert } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { colors } from '../../../styles/colors';
@@ -10,9 +10,20 @@ export default function HelpSupportScreen() {
     const router = useRouter();
 
 
-    const openLink = (url: any) => {
-        Linking.openURL(url);
+    const openLink = async (url: string) => {
+        const supported = await Linking.canOpenURL(url);
+    
+        if (supported) {
+            try {
+                await Linking.openURL(url);
+            } catch (error) {
+                Alert.alert('Erro', 'Não foi possível abrir o link.');
+            }
+        } else {
+            Alert.alert('Erro', 'Nenhum aplicativo encontrado para abrir este link.');
+        }
     };
+    
 
     return (
         <View className='mt-1 flex-1 px-4'>
