@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, Pressable, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, FlatList, Image, Pressable, ScrollView, RefreshControl, Linking, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Importar AsyncStorage
 import axios from 'axios';
 import Loading from '../../../components/loading/loading';
@@ -25,6 +25,17 @@ export default function AutoAjudaVideos() {
   const categories = ['Ansiedade', 'Preocupação', 'Desânimo', 'Depressão', 'Pânico']
 
   const googleApiKey = Constants.expoConfig?.extra?.GOOGLE_YT_API_KEY;
+
+  const openVideo = async (url: string) => {
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert("Erro", "Não foi possível abrir o vídeo.");
+    }
+  };
+
 
   const fetchVideos = async (query: string) => {
     setLoading(true)
@@ -57,7 +68,7 @@ export default function AutoAjudaVideos() {
           key: googleApiKey,
         },
       })
-      
+
 
       console.log('Resposta da API:', response.data)
 
@@ -101,12 +112,12 @@ export default function AutoAjudaVideos() {
     if (selectedCategory) {
       setRefreshing(true)
       await clearCacheForCategory(selectedCategory)
-      await fetchVideos(selectedCategory) 
+      await fetchVideos(selectedCategory)
       setRefreshing(false)
     }
   };
 
-  // Este efeito será disparado sempre que uma nova query de busca for definida
+
   useEffect(() => {
     if (selectedCategory) {
       fetchVideos(selectedCategory)
@@ -114,9 +125,10 @@ export default function AutoAjudaVideos() {
   }, [selectedCategory])
 
   const renderVideo = ({ item }: { item: VideoData }) => (
-    <Pressable style={{width: wp(92), height: hp(28), borderRadius: 12,
-    }} className='bg-green-100 rounded-2xl mb-3' onPress={() => console.log('Abrir vídeo', item.videoUrl)}>
-      <Image source={{ uri: `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg` }} style={{ width: '100%', height: hp(20), resizeMode: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12}} />
+    <Pressable style={{
+      width: wp(92), height: hp(28), borderRadius: 12,
+    }} className='bg-green-100 rounded-2xl mb-3' onPress={() => openVideo(item.videoUrl)} >
+      <Image source={{ uri: `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg` }} style={{ width: '100%', height: hp(20), resizeMode: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12 }} />
       <Text className='text-left font-medium p-2 text-white' style={{ fontSize: hp(1.5), height: hp(7), overflow: 'hidden', }} numberOfLines={2}>{item.title}</Text>
     </Pressable>
   );
@@ -145,7 +157,7 @@ export default function AutoAjudaVideos() {
                 // Verifica se a categoria já está selecionada para evitar requisições desnecessárias
                 if (selectedCategory !== category) {
                   setSelectedCategory(category)
-                  setSearchQuery(category)      
+                  setSearchQuery(category)
                 }
               }}
             >
@@ -156,7 +168,7 @@ export default function AutoAjudaVideos() {
         </ScrollView>
 
         {error ? (
-          <Text>{error}</Text> 
+          <Text>{error}</Text>
         ) : loading ? (
           <View className="items-center justify-center">
             <Loading size={hp(10)} />
@@ -169,7 +181,7 @@ export default function AutoAjudaVideos() {
             keyExtractor={(item) => item.id}
             refreshControl={
               <RefreshControl
-                refreshing={refreshing} 
+                refreshing={refreshing}
                 onRefresh={onRefresh}
               />
             }
