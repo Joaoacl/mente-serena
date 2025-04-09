@@ -15,8 +15,6 @@
 - 🎯 Escolha de sentimentos atuais (ansiedade, desânimo, preocupação, etc.)
 - 🧘‍♂️ Exercícios guiados de respiração e meditação
 - 📈 Acompanhamento de progresso emocional
-- 🔔 Notificações para lembrar de praticar autocuidado
-- 💬 Sugestões personalizadas com base no sentimento selecionado
 - 🔒 Login seguro com Firebase Authentication
 
 ## 📊 Público-Alvo
